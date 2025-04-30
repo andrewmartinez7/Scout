@@ -6,27 +6,22 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct ScoutApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+    // Use ScoutUserViewModel consistently
+    @StateObject private var userViewModel = ScoutUserViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // Conditionally display the main app or login screen based on authentication state
+            if userViewModel.isAuthenticated {
+                ScoutMainTabView()
+                    .environmentObject(userViewModel)
+            } else {
+                ImprovedLoginView()
+                    .environmentObject(userViewModel)
+            }
         }
-        .modelContainer(sharedModelContainer)
     }
 }
