@@ -207,7 +207,7 @@ struct ProfileOtherView_Previews: PreviewProvider {
     static var previews: some View {
         let mockUser = ScoutModels.User(
             id: "1",
-            name: "John Smith",
+            name: "John J Smith",
             email: "john@example.com",
             profileImage: nil,
             backgroundImage: nil,
