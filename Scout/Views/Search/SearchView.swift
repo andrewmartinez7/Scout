@@ -82,6 +82,7 @@ struct SearchView: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.top)
+// For SearchView.swift - Update the toolbar section:
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
                 HStack {
@@ -94,7 +95,8 @@ struct SearchView: View {
                             Text("Search")
                                 .font(.caption)
                         }
-                        .foregroundColor(Color.blue)
+                        // Highlight the active tab
+                        .foregroundColor(navigationCoordinator.activeTab == 0 ? ScoutColors.primaryBlue : Color.gray)
                     }
                     
                     Spacer()
@@ -108,7 +110,8 @@ struct SearchView: View {
                             Text("Profile")
                                 .font(.caption)
                         }
-                        .foregroundColor(Color.gray)
+                        // Highlight the active tab
+                        .foregroundColor(navigationCoordinator.activeTab == 1 ? ScoutColors.primaryBlue : Color.gray)
                     }
                 }
                 .padding(.horizontal, 40)
