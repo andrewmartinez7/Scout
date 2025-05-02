@@ -147,6 +147,7 @@ struct UserListItem: View {
                     .foregroundColor(.gray)
             }
             .padding(.vertical, 8)
+            .contentShape(Rectangle()) // Ensures the entire row is tappable
         }
     }
 }
