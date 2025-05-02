@@ -94,7 +94,7 @@ struct SearchView: View {
                             Text("Search")
                                 .font(.caption)
                         }
-                        .foregroundColor(navigationCoordinator.activeTab == 0 ? ScoutColors.primaryBlue : Color.gray)
+                        .foregroundColor(Color.blue)
                     }
                     
                     Spacer()
@@ -108,7 +108,7 @@ struct SearchView: View {
                             Text("Profile")
                                 .font(.caption)
                         }
-                        .foregroundColor(navigationCoordinator.activeTab == 1 ? ScoutColors.primaryBlue : Color.gray)
+                        .foregroundColor(Color.gray)
                     }
                 }
                 .padding(.horizontal, 40)
@@ -138,7 +138,7 @@ struct SearchView: View {
                     ForEach(userViewModel.searchResults) { user in
                         NavigationLink(destination: ProfileOtherView(user: user)) {
                             UserListItem(user: user) {
-                                // Navigation handled by NavigationLink
+                                // This is now handled by the NavigationLink
                             }
                             .padding(.horizontal)
                         }
@@ -180,7 +180,6 @@ struct SearchView: View {
                                     Spacer()
                                 }
                                 .padding()
-                                .contentShape(Rectangle()) // Makes entire row tappable
                             }
                             
                             Divider()
@@ -189,7 +188,7 @@ struct SearchView: View {
                     }
                 }
                 
-                // Suggested users - Updated to make each user clickable
+                // Suggested users
                 if !userViewModel.suggestedUsers.isEmpty {
                     Text("Suggested for You")
                         .font(.system(size: 16, weight: .semibold))
@@ -198,9 +197,10 @@ struct SearchView: View {
                     
                     VStack(spacing: 0) {
                         ForEach(userViewModel.suggestedUsers) { user in
+                            // This NavigationLink wraps the existing UserListItem to make it clickable
                             NavigationLink(destination: ProfileOtherView(user: user)) {
                                 UserListItem(user: user) {
-                                    // Navigation handled by NavigationLink
+                                    // No action needed here, navigation is handled by the NavigationLink
                                 }
                                 .padding(.horizontal)
                             }
