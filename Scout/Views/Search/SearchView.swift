@@ -1,4 +1,4 @@
-// SearchView.swift
+// Scout/Views/Search/SearchView.swift
 import SwiftUI
 import Combine
 
@@ -82,7 +82,6 @@ struct SearchView: View {
         }
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.top)
-// For SearchView.swift - Update the toolbar section:
         .toolbar {
             ToolbarItem(placement: .bottomBar) {
                 HStack {
@@ -95,7 +94,6 @@ struct SearchView: View {
                             Text("Search")
                                 .font(.caption)
                         }
-                        // Highlight the active tab
                         .foregroundColor(navigationCoordinator.activeTab == 0 ? ScoutColors.primaryBlue : Color.gray)
                     }
                     
@@ -110,7 +108,6 @@ struct SearchView: View {
                             Text("Profile")
                                 .font(.caption)
                         }
-                        // Highlight the active tab
                         .foregroundColor(navigationCoordinator.activeTab == 1 ? ScoutColors.primaryBlue : Color.gray)
                     }
                 }
@@ -139,10 +136,13 @@ struct SearchView: View {
                 } else {
                     // Results list
                     ForEach(userViewModel.searchResults) { user in
-                        UserListItem(user: user) {
-                            // Navigate to user profile
+                        NavigationLink(destination: ProfileOtherView(user: user)) {
+                            UserListItem(user: user) {
+                                // Navigation handled by NavigationLink
+                            }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
+                        .buttonStyle(PlainButtonStyle())
                         
                         Divider()
                             .padding(.leading)
@@ -180,6 +180,7 @@ struct SearchView: View {
                                     Spacer()
                                 }
                                 .padding()
+                                .contentShape(Rectangle()) // Makes entire row tappable
                             }
                             
                             Divider()
@@ -188,7 +189,7 @@ struct SearchView: View {
                     }
                 }
                 
-                // Suggested users
+                // Suggested users - Updated to make each user clickable
                 if !userViewModel.suggestedUsers.isEmpty {
                     Text("Suggested for You")
                         .font(.system(size: 16, weight: .semibold))
@@ -197,10 +198,13 @@ struct SearchView: View {
                     
                     VStack(spacing: 0) {
                         ForEach(userViewModel.suggestedUsers) { user in
-                            UserListItem(user: user) {
-                                // Navigate to user profile
+                            NavigationLink(destination: ProfileOtherView(user: user)) {
+                                UserListItem(user: user) {
+                                    // Navigation handled by NavigationLink
+                                }
+                                .padding(.horizontal)
                             }
-                            .padding(.horizontal)
+                            .buttonStyle(PlainButtonStyle())
                             
                             Divider()
                                 .padding(.leading)
