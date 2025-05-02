@@ -17,6 +17,8 @@ struct ScoutMainTabView: View {
             NavigationView {
                 SearchView()
                     .id(navigationCoordinator.searchNavigationRoot)
+                    // Hide the toolbar on this root view to prevent duplicate navigation
+                    .toolbar(.hidden, for: .bottomBar)
             }
             .tabItem {
                 Image(systemName: "magnifyingglass")
@@ -28,6 +30,8 @@ struct ScoutMainTabView: View {
             NavigationView {
                 ProfileSelfView()
                     .id(navigationCoordinator.profileNavigationRoot)
+                    // Hide the toolbar on this root view to prevent duplicate navigation
+                    .toolbar(.hidden, for: .bottomBar)
             }
             .tabItem {
                 Image(systemName: "person.fill")
