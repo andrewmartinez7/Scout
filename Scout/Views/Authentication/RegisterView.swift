@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit // Add UIKit import
 
 struct RegisterView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -46,10 +47,32 @@ struct RegisterView: View {
                     // Registration form
                     VStack(spacing: 16) {
                         // Name field
-                        inputField(title: "Full Name", text: $name, keyboardType: .default)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Full Name")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(ScoutColors.textGray)
+                            
+                            TextField("", text: $name)
+                                .font(.system(size: 17))
+                                .padding(16)
+                                .background(ScoutColors.inputBackground)
+                                .cornerRadius(cornerRadius)
+                        }
                         
                         // Email field
-                        inputField(title: "Email", text: $email, keyboardType: .emailAddress)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Email")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(ScoutColors.textGray)
+                            
+                            TextField("", text: $email)
+                                .font(.system(size: 17))
+                                .padding(16)
+                                .background(ScoutColors.inputBackground)
+                                .cornerRadius(cornerRadius)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                        }
                         
                         // Password field
                         VStack(alignment: .leading, spacing: 8) {
@@ -60,7 +83,7 @@ struct RegisterView: View {
                             SecureField("", text: $password)
                                 .font(.system(size: 17))
                                 .padding(16)
-                                .background(Color(UIColor.systemGray6))
+                                .background(ScoutColors.inputBackground)
                                 .cornerRadius(cornerRadius)
                         }
                         
@@ -73,7 +96,7 @@ struct RegisterView: View {
                             SecureField("", text: $confirmPassword)
                                 .font(.system(size: 17))
                                 .padding(16)
-                                .background(Color(UIColor.systemGray6))
+                                .background(ScoutColors.inputBackground)
                                 .cornerRadius(cornerRadius)
                         }
                     }
@@ -124,24 +147,6 @@ struct RegisterView: View {
                     }
                 }
             )
-        }
-    }
-    
-    // Reusable input field
-    private func inputField(title: String, text: Binding<String>, keyboardType: UIKeyboardType = .default) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(ScoutColors.textGray)
-            
-            TextField("", text: text)
-                .font(.system(size: 17))
-                .padding(16)
-                .background(Color(UIColor.systemGray6))
-                .cornerRadius(cornerRadius)
-                .keyboardType(keyboardType)
-                .autocapitalization(keyboardType == .emailAddress ? .none : .words)
-                .disableAutocorrection(keyboardType == .emailAddress)
         }
     }
     

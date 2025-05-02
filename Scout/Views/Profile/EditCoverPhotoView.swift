@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import PhotosUI
+import UIKit // Add UIKit import
 
 /// EditCoverPhotoView - Screen for updating the user's cover/background photo
 struct EditCoverPhotoView: View {

@@ -20,7 +20,7 @@ struct ScoutColors {
     
     // Secondary UI colors
     static let background = Color.white
-    static let inputBackground = Color(UIColor.systemGray6)
+    static let inputBackground = Color(uiColor: .systemGray6)
     
     // Text colors
     static let primaryText = Color.black
@@ -30,4 +30,3 @@ struct ScoutColors {
     static let facebookBlue = Color(red: 0.23, green: 0.35, blue: 0.6)
     static let appleBlack = Color.black
 }
-

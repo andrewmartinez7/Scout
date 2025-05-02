@@ -1,6 +1,7 @@
 // Scout/Views/Search/SearchView.swift
 import SwiftUI
 import Combine
+import UIKit // Add this import for UIImage and UIColor
 
 struct SearchView: View {
     @EnvironmentObject var userViewModel: ScoutUserViewModel
@@ -65,7 +66,7 @@ struct SearchView: View {
                     }
                 }
                 .padding(10)
-                .background(Color(.systemGray6))
+                .background(ScoutColors.inputBackground)
                 .cornerRadius(8)
                 .padding(.horizontal)
                 .padding(.top, 16)
@@ -136,13 +137,10 @@ struct SearchView: View {
                 } else {
                     // Results list
                     ForEach(userViewModel.searchResults) { user in
-                        NavigationLink(destination: ProfileOtherView(user: user)) {
-                            UserListItem(user: user) {
-                                // This is now handled by the NavigationLink
-                            }
-                            .padding(.horizontal)
+                        UserListItem(user: user) {
+                            // Navigate to user profile
                         }
-                        .buttonStyle(PlainButtonStyle())
+                        .padding(.horizontal)
                         
                         Divider()
                             .padding(.leading)
@@ -197,10 +195,10 @@ struct SearchView: View {
                     
                     VStack(spacing: 0) {
                         ForEach(userViewModel.suggestedUsers) { user in
-                            // This NavigationLink wraps the existing UserListItem to make it clickable
+                            // Wrap in NavigationLink to make clickable
                             NavigationLink(destination: ProfileOtherView(user: user)) {
                                 UserListItem(user: user) {
-                                    // No action needed here, navigation is handled by the NavigationLink
+                                    // Action handled by NavigationLink
                                 }
                                 .padding(.horizontal)
                             }

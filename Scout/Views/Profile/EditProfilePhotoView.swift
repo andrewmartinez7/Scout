@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import PhotosUI
+import UIKit // Add UIKit import
 
 /// EditProfilePhotoView - Screen for updating the user's profile photo
 struct EditProfilePhotoView: View {

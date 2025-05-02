@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import PhotosUI
+import UIKit // Add UIKit import
 
 /// ScoutHeader - A reusable header component used throughout the app
 struct ScoutHeader: View {
@@ -189,7 +190,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     // MARK: - UIViewControllerRepresentable
     
     /// Creates and configures the PHPickerViewController
-    func makeUIViewController(context: Context) -> PHPickerViewController {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ImagePicker>) -> PHPickerViewController {
         // Configure the picker options
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -202,7 +203,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     }
     
     /// Updates the view controller if needed (not used in this implementation)
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: UIViewControllerRepresentableContext<ImagePicker>) {}
     
     /// Creates a coordinator to handle the picker delegate methods
     func makeCoordinator() -> Coordinator {

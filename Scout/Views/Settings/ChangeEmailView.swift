@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit // Add UIKit import
 
 struct ChangeEmailView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -39,7 +40,7 @@ struct ChangeEmailView: View {
                         TextField("", text: $currentEmail)
                             .font(.system(size: 17))
                             .padding(16)
-                            .background(Color(UIColor.systemGray6))
+                            .background(ScoutColors.inputBackground)
                             .cornerRadius(12)
                             .disabled(true)
                     }
@@ -53,9 +54,8 @@ struct ChangeEmailView: View {
                         TextField("", text: $newEmail)
                             .font(.system(size: 17))
                             .padding(16)
-                            .background(Color(UIColor.systemGray6))
+                            .background(ScoutColors.inputBackground)
                             .cornerRadius(12)
-                            .keyboardType(.emailAddress)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                     }
@@ -69,7 +69,7 @@ struct ChangeEmailView: View {
                         SecureField("", text: $password)
                             .font(.system(size: 17))
                             .padding(16)
-                            .background(Color(UIColor.systemGray6))
+                            .background(ScoutColors.inputBackground)
                             .cornerRadius(12)
                     }
                     

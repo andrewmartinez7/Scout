@@ -16,14 +16,14 @@ struct VideoPicker: UIViewControllerRepresentable {
     @Binding var selectedURL: URL?
     @Environment(\.presentationMode) var presentationMode
     
-    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+    func makeUIViewController(context: UIViewControllerRepresentableContext<VideoPicker>) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.movie, UTType.video, UTType.audiovisualContent])
         picker.delegate = context.coordinator
         picker.allowsMultipleSelection = false
         return picker
     }
     
-    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: UIViewControllerRepresentableContext<VideoPicker>) {}
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -86,7 +86,7 @@ struct AddVideoView: View {
                         
                         TextField("Enter a title for your video", text: $videoTitle)
                             .padding()
-                            .background(Color(.systemGray6))
+                            .background(Color(uiColor: .systemGray6))
                             .cornerRadius(8)
                     }
                     
@@ -130,7 +130,7 @@ struct AddVideoView: View {
                             }
                         }
                         .padding()
-                        .background(Color(.systemGray6))
+                        .background(Color(uiColor: .systemGray6))
                         .cornerRadius(8)
                     }
                     
@@ -187,7 +187,7 @@ struct AddVideoView: View {
                 )
             }
             .sheet(isPresented: $showVideoPicker) {
-                VideoPicker(selectedURL: $selectedVideoURL)
+                VideoPicker(selectedURL: $selectedURL)
             }
         }
     }

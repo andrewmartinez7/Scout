@@ -1,6 +1,7 @@
 // MessagesView.swift
 import SwiftUI
 import Combine
+import UIKit // Add UIKit import
 
 struct MessagesView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -82,7 +83,7 @@ struct MessagesView: View {
                 }
             }
             .padding(10)
-            .background(Color(.systemGray6))
+            .background(ScoutColors.inputBackground)
             .cornerRadius(10)
             .padding(.horizontal)
             .padding(.vertical, 8)

@@ -1,7 +1,7 @@
-// HighlightsGridView.swift
-
+// Scout/Views/Videos/HighlightsGridView.swift
 import SwiftUI
 import PhotosUI
+import UIKit // Add UIKit import
 
 struct HighlightsGridView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -128,5 +128,12 @@ struct HighlightsGridView: View {
                     .padding(.top, 4)
             }
         }
+    }
+}
+
+struct HighlightsGridView_Previews: PreviewProvider {
+    static var previews: some View {
+        HighlightsGridView()
+            .environmentObject(ScoutUserViewModel())
     }
 }
