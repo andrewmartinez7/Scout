@@ -8,22 +8,18 @@ class NavigationCoordinator: ObservableObject {
     @Published var profileNavigationRoot = UUID()
     
     /// Resets to the search root view and activates the search tab
+    /// Always resets the navigation stack, even if already on search tab
     func resetToSearchRoot() {
-        // Only regenerate UUID if we're not already on the tab
-        // This prevents unnecessary reloading when already on the tab
-        if activeTab != 0 {
-            searchNavigationRoot = UUID()
-        }
+        // Always regenerate UUID to reset navigation stack
+        searchNavigationRoot = UUID()
         activeTab = 0
     }
     
     /// Resets to the profile root view and activates the profile tab
+    /// Always resets the navigation stack, even if already on profile tab
     func resetToProfileRoot() {
-        // Only regenerate UUID if we're not already on the tab
-        // This prevents unnecessary reloading when already on the tab
-        if activeTab != 1 {
-            profileNavigationRoot = UUID()
-        }
+        // Always regenerate UUID to reset navigation stack
+        profileNavigationRoot = UUID()
         activeTab = 1
     }
 }

@@ -17,8 +17,6 @@ struct ScoutMainTabView: View {
             NavigationView {
                 SearchView()
                     .id(navigationCoordinator.searchNavigationRoot)
-                    // Hide the toolbar on this root view to prevent duplicate navigation
-                    .toolbar(.hidden, for: .bottomBar)
             }
             .tabItem {
                 Image(systemName: "magnifyingglass")
@@ -30,8 +28,6 @@ struct ScoutMainTabView: View {
             NavigationView {
                 ProfileSelfView()
                     .id(navigationCoordinator.profileNavigationRoot)
-                    // Hide the toolbar on this root view to prevent duplicate navigation
-                    .toolbar(.hidden, for: .bottomBar)
             }
             .tabItem {
                 Image(systemName: "person.fill")
@@ -39,11 +35,30 @@ struct ScoutMainTabView: View {
             }
             .tag(1)
         }
-        .accentColor(ScoutColors.primary)
+        .accentColor(ScoutColors.primaryBlue)
         .onAppear {
             // Set default tab bar appearance
             UITabBar.appearance().backgroundColor = .systemBackground
         }
         .environmentObject(navigationCoordinator)
+        // Listen for navigation coordinator changes
+        .onChange(of: navigationCoordinator.searchNavigationRoot) { _, _ in
+            // Navigation root changed, ensure we're on the right tab
+            if navigationCoordinator.activeTab == 0 {
+                // Force update by changing selection
+                DispatchQueue.main.async {
+                    navigationCoordinator.activeTab = 0
+                }
+            }
+        }
+        .onChange(of: navigationCoordinator.profileNavigationRoot) { _, _ in
+            // Navigation root changed, ensure we're on the right tab
+            if navigationCoordinator.activeTab == 1 {
+                // Force update by changing selection
+                DispatchQueue.main.async {
+                    navigationCoordinator.activeTab = 1
+                }
+            }
+        }
     }
 }

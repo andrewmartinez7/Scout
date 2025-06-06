@@ -46,9 +46,50 @@ struct SearchView: View {
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.top)
         .onTapGesture {
-            // Dismiss keyboard when tapping outside
-            isSearchFieldFocused = false
+            // Only dismiss keyboard when tapping outside search area
+            if isSearchFieldFocused {
+                isSearchFieldFocused = false
+            }
         }
+        .toolbar {
+            ToolbarItem(placement: .bottomBar) {
+                bottomTabBar
+            }
+        }
+    }
+    
+    /// Bottom tab bar for navigation
+    private var bottomTabBar: some View {
+        HStack {
+            // Search tab (active)
+            Button(action: {
+                navigationCoordinator.resetToSearchRoot()
+            }) {
+                VStack {
+                    Image(systemName: "magnifyingglass")
+                        .font(.system(size: 24))
+                    Text("Search")
+                        .font(.caption)
+                }
+                .foregroundColor(ScoutColors.primaryBlue)
+            }
+            
+            Spacer()
+            
+            // Profile tab
+            Button(action: {
+                navigationCoordinator.resetToProfileRoot()
+            }) {
+                VStack {
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 24))
+                    Text("Profile")
+                        .font(.caption)
+                }
+                .foregroundColor(Color.gray)
+            }
+        }
+        .padding(.horizontal, 40)
     }
     
     // MARK: - View Components
@@ -99,6 +140,7 @@ struct SearchView: View {
                 .focused($isSearchFieldFocused)
                 .font(.system(size: 16))
                 .textFieldStyle(PlainTextFieldStyle())
+                .submitLabel(.search)
                 .onChange(of: searchText) { oldValue, newValue in
                     handleSearchTextChange(newValue)
                 }
@@ -107,6 +149,10 @@ struct SearchView: View {
                     if !searchText.isEmpty {
                         performSearch(searchText)
                     }
+                }
+                .onTapGesture {
+                    // Ensure focus when tapped
+                    isSearchFieldFocused = true
                 }
             
             // Clear button (shown when text exists)
@@ -124,12 +170,19 @@ struct SearchView: View {
         .cornerRadius(10)
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
+        .onTapGesture {
+            // Focus when tapping anywhere in the search bar area
+            isSearchFieldFocused = true
+        }
     }
     
     /// Main content section that changes based on search state
     private var contentSection: some View {
         Group {
-            if isSearching {
+            if isSearchFieldFocused && searchText.isEmpty {
+                // Show recent searches when focused but no text entered
+                recentSearchesOnlyView
+            } else if isSearching {
                 searchResultsView
             } else {
                 suggestionsView
@@ -194,12 +247,7 @@ struct SearchView: View {
     private var suggestionsView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Recent searches section
-                if !userViewModel.recentSearches.isEmpty {
-                    recentSearchesSection
-                }
-                
-                // Suggested users section
+                // Suggested users section (no recent searches here)
                 if !userViewModel.suggestedUsers.isEmpty {
                     suggestedUsersSection
                 } else {
@@ -235,6 +283,35 @@ struct SearchView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
+    }
+    
+    /// Recent searches view when search field is focused but empty
+    private var recentSearchesOnlyView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                if !userViewModel.recentSearches.isEmpty {
+                    recentSearchesSection
+                } else {
+                    // Show helpful text when no recent searches
+                    VStack(spacing: 12) {
+                        Text("No recent searches")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundColor(.secondary)
+                            .padding(.top, 40)
+                        
+                        Text("Start typing to search for athletes and coaches")
+                            .font(.system(size: 14))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal, 16)
+                }
+                
+                Spacer(minLength: 100)
+            }
+            .padding(.top, 8)
+        }
     }
     
     /// Recent searches history section
