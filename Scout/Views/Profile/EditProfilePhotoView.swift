@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import UIKit
 
 /// EditProfilePhotoView - Screen for updating the user's profile photo
 /// Provides image selection, preview, and upload functionality

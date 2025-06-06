@@ -7,6 +7,7 @@
 
 // ProfileSelfView.swift
 import SwiftUI
+import UIKit
 
 /// ProfileSelfView - User's own profile view showing their information, teams, and videos
 struct ProfileSelfView: View {

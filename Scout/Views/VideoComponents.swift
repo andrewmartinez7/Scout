@@ -9,6 +9,7 @@
 import SwiftUI
 import PhotosUI
 import UniformTypeIdentifiers
+import UIKit
 
 // MARK: - Video Picker
 

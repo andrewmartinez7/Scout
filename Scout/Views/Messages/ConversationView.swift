@@ -7,14 +7,15 @@
 
 import SwiftUI
 import Combine
+import UIKit
 
+/// ConversationView - Individual conversation interface for messaging
+/// Provides real-time messaging with message bubbles and input
 struct ConversationView: View {
     @Environment(\.presentationMode) var presentationMode
-    // Update to use ScoutUserViewModel
     @EnvironmentObject var userViewModel: ScoutUserViewModel
     @EnvironmentObject var navigationCoordinator: NavigationCoordinator
 
-    
     let conversation: ScoutModels.Conversation
     @State private var messageText = ""
     
@@ -178,5 +179,6 @@ struct ConversationView_Previews: PreviewProvider {
         
         return ConversationView(conversation: viewModel.conversations.first!)
             .environmentObject(viewModel)
+            .environmentObject(NavigationCoordinator())
     }
 }

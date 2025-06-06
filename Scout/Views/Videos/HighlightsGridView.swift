@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import UIKit
 
 /// HighlightsGridView - Grid display of user's highlight videos
 /// Provides organized video browsing with add video functionality

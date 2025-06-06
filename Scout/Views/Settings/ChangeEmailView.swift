@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 /// ChangeEmailView - Screen for updating user's email address
 /// Provides secure email change functionality with password verification

@@ -6,11 +6,20 @@
 //
 
 import SwiftUI
+import UIKit
 
+/// SearchResultsView - Displays search results for athletes and coaches
+/// Provides different states: empty search, no results, and results list
 struct SearchResultsView: View {
-    // Update to use ScoutUserViewModel
+    // MARK: - Environment Objects
+    
+    /// User view model for search operations
     @EnvironmentObject var userViewModel: ScoutUserViewModel
+    
+    /// Search query binding from parent view
     @Binding var query: String
+    
+    // MARK: - Body
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,7 +33,9 @@ struct SearchResultsView: View {
         }
     }
     
-    // Empty state view when no search is performed
+    // MARK: - View Components
+    
+    /// Empty state view when no search is performed
     private var emptyStateView: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -46,7 +57,7 @@ struct SearchResultsView: View {
         }
     }
     
-    // No results view when search has no matches
+    /// No results view when search has no matches
     private var noResultsView: some View {
         VStack(spacing: 20) {
             Spacer()
@@ -68,7 +79,7 @@ struct SearchResultsView: View {
         }
     }
     
-    // Results list view when search has matches
+    /// Results list view when search has matches
     private var resultsListView: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
@@ -85,7 +96,7 @@ struct SearchResultsView: View {
         }
     }
     
-    // User row view helper
+    /// User row view helper
     private func userRow(user: ScoutModels.User) -> some View {
         HStack(spacing: 16) {
             // Profile image

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ProfileOtherView: View {
     @Environment(\.presentationMode) var presentationMode

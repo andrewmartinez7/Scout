@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 /// RegisterView - Screen for creating new user accounts
 /// Provides form-based registration with validation and error handling

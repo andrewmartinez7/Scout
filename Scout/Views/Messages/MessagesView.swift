@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import UIKit
 
 /// MessagesView - Main messaging interface displaying conversation list
 /// Provides messaging overview with search and navigation functionality

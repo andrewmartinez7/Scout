@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import UIKit
 
 /// EditCoverPhotoView - Screen for updating the user's cover/background photo
 /// Provides landscape image selection with guidelines and preview functionality
