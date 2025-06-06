@@ -215,7 +215,7 @@ private struct FormInputField: View {
     @Binding var text: String
     let placeholder: String
     var keyboardType: UIKeyboardType = .default
-    var autocapitalization: TextInputAutocapitalization = .words
+    var autocapitalization: UITextAutocapitalizationType = .words
     var disableAutocorrection: Bool = false
     
     var body: some View {
@@ -230,7 +230,7 @@ private struct FormInputField: View {
                 .background(ScoutColors.inputBackground)
                 .cornerRadius(12)
                 .keyboardType(keyboardType)
-                .textInputAutocapitalization(autocapitalization)
+                .autocapitalization(autocapitalization)
                 .disableAutocorrection(disableAutocorrection)
         }
     }

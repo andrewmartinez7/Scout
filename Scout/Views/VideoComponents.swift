@@ -173,9 +173,14 @@ struct AddVideoView: View {
                 .padding()
             }
             .navigationBarTitle("Add Highlight Video", displayMode: .inline)
-            .navigationBarItems(trailing: Button("Cancel") {
-                presentationMode.wrappedValue.dismiss()
-            })
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Cancel") {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
+            }
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Video Upload"),
@@ -188,7 +193,7 @@ struct AddVideoView: View {
                 )
             }
             .sheet(isPresented: $showVideoPicker) {
-                VideoPicker(selectedURL: $selectedURL)
+                VideoPicker(selectedURL: $selectedVideoURL)
             }
         }
     }
