@@ -4,16 +4,31 @@
 //
 //  Created by Andrew Martinez on 4/16/25.
 //
+
 import SwiftUI
 import PhotosUI
-import UIKit // Add UIKit import
+
+/// ScoutComponents - Reusable UI components for the Scout app
+/// Contains common components used throughout the application
+
+// MARK: - ScoutHeader
 
 /// ScoutHeader - A reusable header component used throughout the app
+/// Provides consistent navigation and branding across screens
 struct ScoutHeader: View {
+    // MARK: - Properties
+    
+    /// Title text displayed in the header
     var title: String
+    
+    /// Whether to show a back navigation button
     var hasBackButton: Bool = false
+    
+    /// Callback for back button tap
     var onBackTapped: (() -> Void)? = nil
-      
+    
+    // MARK: - Body
+    
     var body: some View {
         ZStack {
             // Background
@@ -21,7 +36,7 @@ struct ScoutHeader: View {
                 .fill(ScoutColors.primaryBlue)
                 .frame(height: 90)
                 .edgesIgnoringSafeArea(.top)
-              
+            
             // Content
             HStack {
                 // Back button if needed
@@ -36,16 +51,16 @@ struct ScoutHeader: View {
                     }
                     .padding(.leading, 8)
                 }
-                  
+                
                 Spacer()
-                  
+                
                 // Title
                 Text(title)
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(.white)
-                  
+                
                 Spacer()
-                  
+                
                 // Empty space to balance the back button
                 if hasBackButton {
                     Rectangle()
@@ -58,12 +73,24 @@ struct ScoutHeader: View {
     }
 }
 
+// MARK: - VideoThumbnail
+
 /// VideoThumbnail - A reusable component for displaying video thumbnails
+/// Shows video preview with play button and title
 struct VideoThumbnail: View {
+    // MARK: - Properties
+    
+    /// Video title
     var title: String
+    
+    /// Optional thumbnail image
     var thumbnailImage: UIImage?
+    
+    /// Tap callback
     var onTap: () -> Void
-      
+    
+    // MARK: - Body
+    
     var body: some View {
         Button(action: onTap) {
             VStack(alignment: .leading) {
@@ -80,14 +107,14 @@ struct VideoThumbnail: View {
                             .fill(Color.gray.opacity(0.3))
                             .frame(height: 120)
                             .cornerRadius(8)
-                          
+                        
                         Image(systemName: "play.circle")
                             .font(.system(size: 40))
                             .foregroundColor(.white)
                     }
                 }
                 .clipped()
-                  
+                
                 // Title
                 Text(title)
                     .font(.system(size: 14, weight: .medium))
@@ -99,39 +126,33 @@ struct VideoThumbnail: View {
     }
 }
 
+// MARK: - UserListItem
+
 /// UserListItem - A reusable component for displaying user information in lists
+/// Shows user avatar, name, and team information
 struct UserListItem: View {
+    // MARK: - Properties
+    
+    /// User data to display
     var user: ScoutModels.User
+    
+    /// Tap callback
     var onTap: () -> Void
-      
+    
+    // MARK: - Body
+    
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 12) {
                 // Profile image
-                ZStack {
-                    if let profileImage = user.profileImage, let uiImage = UIImage(data: profileImage) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } else {
-                        Circle()
-                            .fill(Color.gray.opacity(0.3))
-                            .frame(width: 50, height: 50)
-                          
-                        Text(String(user.name.prefix(1)))
-                            .font(.system(size: 20, weight: .semibold))
-                            .foregroundColor(.gray)
-                    }
-                }
-                  
+                UserAvatarView(user: user, size: 50)
+                
                 // User info
                 VStack(alignment: .leading, spacing: 4) {
                     Text(user.name)
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.primary)
-                      
+                    
                     if !user.teams.isEmpty {
                         Text(user.teams.joined(separator: ", "))
                             .font(.system(size: 14))
@@ -139,9 +160,9 @@ struct UserListItem: View {
                             .lineLimit(1)
                     }
                 }
-                  
+                
                 Spacer()
-                  
+                
                 // Chevron
                 Image(systemName: "chevron.right")
                     .font(.system(size: 14))
@@ -153,12 +174,62 @@ struct UserListItem: View {
     }
 }
 
+// MARK: - UserAvatarView
+
+/// UserAvatarView - Displays user profile image or initials fallback
+/// Reusable component for consistent avatar display
+struct UserAvatarView: View {
+    // MARK: - Properties
+    
+    /// User data
+    let user: ScoutModels.User
+    
+    /// Avatar size
+    let size: CGFloat
+    
+    // MARK: - Body
+    
+    var body: some View {
+        ZStack {
+            if let profileImage = user.profileImage,
+               let uiImage = UIImage(data: profileImage) {
+                Image(uiImage: uiImage)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: size, height: size)
+                    .clipShape(Circle())
+            } else {
+                Circle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: size, height: size)
+                    .overlay(
+                        Text(String(user.name.prefix(1)))
+                            .font(.system(size: size * 0.4, weight: .semibold))
+                            .foregroundColor(.gray)
+                    )
+            }
+        }
+    }
+}
+
+// MARK: - RoundedButton
+
 /// RoundedButton - A reusable button with consistent styling
+/// Provides primary and secondary button styles
 struct RoundedButton: View {
+    // MARK: - Properties
+    
+    /// Button title
     var title: String
+    
+    /// Button action
     var action: () -> Void
+    
+    /// Whether this is a primary button (filled) or secondary (outlined)
     var isPrimary: Bool = true
-      
+    
+    // MARK: - Body
+    
     var body: some View {
         Button(action: action) {
             Text(title)
@@ -175,6 +246,8 @@ struct RoundedButton: View {
         }
     }
 }
+
+// MARK: - ImagePicker
 
 /// ImagePicker - A reusable component for selecting images from the photo library
 /// Used consistently across the app for profile and cover photo selection
@@ -225,7 +298,8 @@ struct ImagePicker: UIViewControllerRepresentable {
         /// Handle the picker result when user finishes picking
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             // Load the image if available
-            if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            if let itemProvider = results.first?.itemProvider,
+               itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) { image, error in
                     if let image = image as? UIImage {
                         // Update on main thread
