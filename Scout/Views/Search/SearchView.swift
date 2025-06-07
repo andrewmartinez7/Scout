@@ -51,45 +51,6 @@ struct SearchView: View {
                 isSearchFieldFocused = false
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                bottomTabBar
-            }
-        }
-    }
-    
-    /// Bottom tab bar for navigation
-    private var bottomTabBar: some View {
-        HStack {
-            // Search tab (active)
-            Button(action: {
-                navigationCoordinator.resetToSearchRoot()
-            }) {
-                VStack {
-                    Image(systemName: "magnifyingglass")
-                        .font(.system(size: 24))
-                    Text("Search")
-                        .font(.caption)
-                }
-                .foregroundColor(ScoutColors.primaryBlue)
-            }
-            
-            Spacer()
-            
-            // Profile tab
-            Button(action: {
-                navigationCoordinator.resetToProfileRoot()
-            }) {
-                VStack {
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 24))
-                    Text("Profile")
-                        .font(.caption)
-                }
-                .foregroundColor(Color.gray)
-            }
-        }
-        .padding(.horizontal, 40)
     }
     
     // MARK: - View Components

@@ -8,6 +8,8 @@ struct ScoutMainTabView: View {
     
     @EnvironmentObject var userViewModel: ScoutUserViewModel
     @StateObject private var navigationCoordinator = NavigationCoordinator()
+    @State private var lastTappedTab: Int = 0
+    @State private var lastTapTime: Date = Date()
     
     // MARK: - Body
     
@@ -41,24 +43,22 @@ struct ScoutMainTabView: View {
             UITabBar.appearance().backgroundColor = .systemBackground
         }
         .environmentObject(navigationCoordinator)
-        // Listen for navigation coordinator changes
-        .onChange(of: navigationCoordinator.searchNavigationRoot) { _, _ in
-            // Navigation root changed, ensure we're on the right tab
-            if navigationCoordinator.activeTab == 0 {
-                // Force update by changing selection
-                DispatchQueue.main.async {
-                    navigationCoordinator.activeTab = 0
+        // Handle tab selection changes
+        .onChange(of: navigationCoordinator.activeTab) { oldValue, newValue in
+            let now = Date()
+            
+            // If same tab is selected within a short time frame, it's likely a re-tap
+            if oldValue == newValue && now.timeIntervalSince(lastTapTime) < 0.5 {
+                // Reset navigation for the active tab
+                if newValue == 0 {
+                    navigationCoordinator.resetToSearchRoot()
+                } else if newValue == 1 {
+                    navigationCoordinator.resetToProfileRoot()
                 }
             }
-        }
-        .onChange(of: navigationCoordinator.profileNavigationRoot) { _, _ in
-            // Navigation root changed, ensure we're on the right tab
-            if navigationCoordinator.activeTab == 1 {
-                // Force update by changing selection
-                DispatchQueue.main.async {
-                    navigationCoordinator.activeTab = 1
-                }
-            }
+            
+            lastTappedTab = newValue
+            lastTapTime = now
         }
     }
 }
